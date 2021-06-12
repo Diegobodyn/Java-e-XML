@@ -1,0 +1,51 @@
+
+package be.com.alura.Teste;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import be.com.alura.Model.Produto;
+
+
+// Usando .xsd e xml
+public class Sistema {
+
+	public static void main(String[] args) throws Exception {
+		
+		//Carrega o .xsd
+		DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
+		fabrica.setValidating(true);
+		fabrica.setNamespaceAware(true);
+		fabrica.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");
+		DocumentBuilder builder = fabrica.newDocumentBuilder();
+		
+		//Carrega o .xml para um documento
+		Document document = builder.parse("src/vendas.xml");
+
+		//Atribui o .xml a um objeto Elemento
+		Element venda = document.getDocumentElement();
+		//Procura moeda no .xml
+		String moeda = venda.getAttribute("moeda");
+		System.out.println(moeda);
+		
+		//Cria uma lista de nós dos produtos do documento .xml
+		NodeList produtos = document.getElementsByTagName("produto");
+
+		//Percorre os nós procurando pelos nomes informados e imprime
+		for (int i = 0; i < produtos.getLength(); i++) {
+			Element produto = (Element) produtos.item(i);
+			
+			String nome = produto.getElementsByTagName("nome").item(0).getTextContent();
+			double preco = Double.parseDouble(produto.getElementsByTagName("preco").item(0).getTextContent());
+			Produto prod = new Produto(nome, preco);
+			
+			System.out.println(prod);
+		}
+
+	}
+
+}
