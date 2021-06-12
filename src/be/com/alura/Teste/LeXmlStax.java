@@ -12,8 +12,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import be.com.alura.Model.Produto;
 
-//Trabalha com eventos, pegando somente oq precisa
-
+//Stax Trabalha com eventos, pegando somente oq precisa
 public class LeXmlStax {
 	public static void main(String[] args) throws Exception {
 		InputStream is = new FileInputStream("src/vendas.xml"); //Imputando o arquivo

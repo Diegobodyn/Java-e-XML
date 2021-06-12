@@ -13,8 +13,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import be.com.alura.Handlers.ProdutosHendler;
 
-//Necessário um Hendler que faz todo a lógica.
-
+//Sax Necessário um Hendler que faz todo a lógica.
 public class LeXmlComSax {
 	public static void main(String[] args) throws Exception {
 		

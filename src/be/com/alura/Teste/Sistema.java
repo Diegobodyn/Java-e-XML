@@ -3,6 +3,10 @@ package be.com.alura.Teste;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,8 +14,7 @@ import org.w3c.dom.NodeList;
 
 import be.com.alura.Model.Produto;
 
-
-// Usando .xsd e xml
+// DOM trabalha .xsd e xml
 public class Sistema {
 
 	public static void main(String[] args) throws Exception {
@@ -32,8 +35,15 @@ public class Sistema {
 		String moeda = venda.getAttribute("moeda");
 		System.out.println(moeda);
 		
+		//Fazendo consultas com XPath
+		String exp = "/venda/produtos/produto[contains(nome,'Livro')]";
+		XPath path = XPathFactory.newInstance().newXPath();
+		
+		XPathExpression expression = path.compile(exp);
+		NodeList produtos = (NodeList) expression.evaluate(document, XPathConstants.NODESET);
+		
 		//Cria uma lista de nós dos produtos do documento .xml
-		NodeList produtos = document.getElementsByTagName("produto");
+		//NodeList produtos = document.getElementsByTagName("produto");
 
 		//Percorre os nós procurando pelos nomes informados e imprime
 		for (int i = 0; i < produtos.getLength(); i++) {
@@ -42,10 +52,7 @@ public class Sistema {
 			String nome = produto.getElementsByTagName("nome").item(0).getTextContent();
 			double preco = Double.parseDouble(produto.getElementsByTagName("preco").item(0).getTextContent());
 			Produto prod = new Produto(nome, preco);
-			
 			System.out.println(prod);
 		}
-
 	}
-
 }
